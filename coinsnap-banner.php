@@ -3,7 +3,7 @@
  * Plugin Name: Coinsnap Banner
  * Description: A simple banner plugin with WYSIWYG editor, dismissible with cookies, and WPML support.
  * Version: 1.0.0
- * Author: Alex @ Coinsnap
+ * Author: Coinsnap Dev
  */
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
