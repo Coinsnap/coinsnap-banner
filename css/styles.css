@@ -1,0 +1,32 @@
+#wptb-banner {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  background: #6393c7;
+  padding: 10px;
+  text-align: center;
+  z-index: 1000;
+  color: white;
+  font-size: 16px;
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+
+    &:hover {
+      color: black;
+    }
+  }
+}
+
+.wptb-message {
+  display: inline-block;
+  max-width: 80%;
+}
+
+#wptb-dismiss {
+  margin-left: 30px;
+  text-decoration: none !important;
+  color: white;
+  cursor: pointer;
+}
