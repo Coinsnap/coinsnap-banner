@@ -30,3 +30,7 @@
   color: white;
   cursor: pointer;
 }
+
+body.wptb-banner-active {
+  transition: margin-top 0.3s ease;
+}

@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Coinsnap Banner
- * Description: A simple banner plugin with WYSIWYG editor, dismissible with cookies, and WPML support.
+ * Description: A simple banner plugin with WYSIWYG editor, dismissable with cookies, and WPML support.
  * Version: 1.0.0
- * Author: Coinsnap Dev
+ * Author: Your Name
  */
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
@@ -36,6 +36,15 @@ function wptb_settings_page() {
 	<?php
 }
 
+// Add body class if banner is active
+function wptb_add_body_class($classes) {
+	if (!isset($_COOKIE['wptb_dismissed']) && get_option('wptb_banner_message')) {
+		$classes[] = 'wptb-banner-active';
+	}
+	return $classes;
+}
+add_filter('body_class', 'wptb_add_body_class');
+
 // Display banner
 function wptb_display_banner() {
 	if (!isset($_COOKIE['wptb_dismissed']) && ($message = get_option('wptb_banner_message'))) {
@@ -43,11 +52,7 @@ function wptb_display_banner() {
 		echo '<div class="wptb-message">' . apply_filters('wpml_translate_single_string', $message, 'Coinsnap Banner', 'Banner Message') . '</div>';
 		echo ' <a id="wptb-dismiss">✕</a>';
 		echo '</div>';
-
-		// Add dynamic body margin via inline style
-		$admin_bar_offset = is_admin_bar_showing() ? 32 : 0;
-		echo '<style>body { margin-top: ' . ($admin_bar_offset + 10) . 'px; }</style>';
-	}
+  }
 }
 add_action('wp_footer', 'wptb_display_banner');
 
@@ -63,6 +68,11 @@ function wptb_enqueue_scripts() {
 	$admin_bar_offset = is_admin_bar_showing() ? 32 : 0;
 	$custom_css = "#wptb-banner { top: {$admin_bar_offset}px; }";
 	wp_add_inline_style('wptb-styles', $custom_css);
+
+	// Pass admin bar offset to JS
+	wp_localize_script('wptb-script', 'wptbData', array(
+		'adminBarOffset' => $admin_bar_offset
+	));
 }
 add_action('wp_enqueue_scripts', 'wptb_enqueue_scripts');
 
